@@ -14,7 +14,7 @@ export const getAmountOfArtInMetAPI = () => {
 
 export const getItemById = (artId) => {
     return api.get(`/${artId}`).then((res) => {
-        return res
+        return res.data
     })
 }
 

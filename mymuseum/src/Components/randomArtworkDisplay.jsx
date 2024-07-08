@@ -9,7 +9,7 @@ import { getRandomInt } from "./getRandomInt";
 const RandomArtworkDisplay = () => {
 
 
-	const [items, setItem] = useState([]);
+	const [items, setItem] = useState({});
 	const [isLoading, setIsLoading] = useState(false)
 
 
@@ -17,9 +17,13 @@ const RandomArtworkDisplay = () => {
 		setIsLoading(true)
 		let amount = getAmountOfArtInMetAPI()
 
-		let idNumber = 0;
-		idNumber = getRandomInt(amount);
-		getItemById(10).then(({ item }) => {
+		let randomNumber = 0;
+		//idNumber = getRandomInt(amount);
+		randomNumber = Math.floor(Math.random() * amount);
+		
+		console.log(randomNumber)
+
+		getItemById(1567).then((item) => {
 			setItem(item);
 		})
 		setIsLoading(false)
@@ -41,10 +45,7 @@ const RandomArtworkDisplay = () => {
 		else {
 			return (
 				<section className="Picture-container grid">
-					<div className="item-image-card">
-						<img className="items-img" src={{ items }.primaryImage} />
-					</div>
-				</section>
+					<ImageOfArt key={items.item_id} item={items}/>				</section>
 			);
 		}
 

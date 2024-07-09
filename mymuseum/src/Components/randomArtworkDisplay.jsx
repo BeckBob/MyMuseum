@@ -1,58 +1,60 @@
-import {useState, useEffect } from "react";
-import { getAmountOfArtInMetAPI, getItemById} from "./utils";
+import { useState, useEffect } from "react";
+import { getAmountOfArtInMetAPI, getItemById } from "./utils";
 import ImageOfArt from "./ImageOfArt";
 
-import { getRandomInt } from "./getRandomInt";
-
-
-
 const RandomArtworkDisplay = () => {
+    const [items, setItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+        const fetchArtwork = async () => {
+            setIsLoading(true);
+            try {
+                const amount = await getAmountOfArtInMetAPI();
+                console.log(amount);
 
-	const [items, setItem] = useState({});
-	const [isLoading, setIsLoading] = useState(false)
+                let fetchedItems = [];
+                let maxTries = 5;
+                let tries = 0;
 
+                while (fetchedItems.length < 5 && tries < maxTries) {
+                    const randomNumber = Math.floor(Math.random() * amount) + 1;
+                    console.log(randomNumber);
 
-	useEffect(() => {
-		setIsLoading(true)
-		let amount = getAmountOfArtInMetAPI()
+                    const item = await getItemById(randomNumber);
+                    console.log(item);
 
-		let randomNumber = 0;
-		//idNumber = getRandomInt(amount);
-		randomNumber = Math.floor(Math.random() * amount);
-		
-		console.log(randomNumber)
+                    if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0) {
+                        fetchedItems.push(item);
+                    } else {
+                        maxTries++;
+                    }
 
-		getItemById(1567).then((item) => {
-			setItem(item);
-		})
-		setIsLoading(false)
-	}, []);
+                    tries++;
+                }
 
-	
-		
+                setItems(fetchedItems);
+            } catch (error) {
+                console.error("Error fetching artwork:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
+        fetchArtwork();
+    }, []);
 
-
-
-
-
-
-
-		if (isLoading) {
-			return (<section className="loading-screen">results are loading</section>)
-		}
-		else {
-			return (
-				<section className="Picture-container grid">
-					<ImageOfArt key={items.item_id} item={items}/>				</section>
-			);
-		}
-
-	}
-;
-	
-
-	
+    if (isLoading) {
+        return <section className="loading-screen">Results are loading...</section>;
+    } else {
+        return (
+            <div key={items.length} className="carousel">
+                {items.map((item) => (
+                    <ImageOfArt key={item.item_id} item={item} className="slide" />
+                ))}
+            </div>
+        );
+    }
+};
 
 export default RandomArtworkDisplay;

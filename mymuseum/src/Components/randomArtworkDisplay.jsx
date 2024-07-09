@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { getAmountOfArtInMetAPI, getItemById } from "./utils";
 import ImageOfArt from "./ImageOfArt";
+import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
+
+import "./randomArtworkDisplay.css";
 
 const RandomArtworkDisplay = () => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [slide, setSlide] = useState(0);
 
     useEffect(() => {
         const fetchArtwork = async () => {
@@ -44,14 +48,35 @@ const RandomArtworkDisplay = () => {
         fetchArtwork();
     }, []);
 
+    const nextSlide = () => {
+        if (slide === 4) { setSlide(0) }
+        else {
+            setSlide(slide + 1)
+        }
+    }
+
+    const prevSlide = () => {
+        if (slide === 0) {
+            setSlide(4)
+        }
+        else {
+            setSlide(slide - 1)
+        }
+    }
+
     if (isLoading) {
         return <section className="loading-screen">Results are loading...</section>;
     } else {
         return (
             <div key={items.length} className="carousel">
-                {items.map((item) => (
-                    <ImageOfArt key={item.item_id} item={item} className="slide" />
+                <BsArrowLeftCircleFill className="arrow arrow-left" onClick={ prevSlide} />
+                {items.map((item, index) => (
+                    <img src={item.primaryImageSmall} alt={item.title} key={index} className={slide === index ? "slide" : "slide slide-hidden"} />
                 ))}
+                <BsArrowRightCircleFill className="arrow arrow-right" onClick={nextSlide} />
+                <span className= "indicators">
+                    {items.map((_, index) => { return <button key={index} onClick={null} className={slide === index ? "indicator" : "indicator indicator-inactive"}></button> }) }
+                </span>
             </div>
         );
     }

@@ -4,7 +4,6 @@ const api = axios.create({
     baseURL: "https://collectionapi.metmuseum.org/public/collection/v1/objects" })
 
 
-
 export const getAmountOfArtInMetAPI = () => {
     
     return api.get().then((res ) => {

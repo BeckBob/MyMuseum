@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAmountOfArtInMetAPI, getItemById } from "../utils";
-
+import {getAmountOfArtInHarvardAPI, getHarvardItemById } from "../harvardUtils"
 
 
 import ArtCard from "../artCards";
@@ -15,22 +15,31 @@ const BrowsePage = () => {
             setIsLoading(true);
             try {
                 const amount = await getAmountOfArtInMetAPI();
-                console.log(amount);
+                const amount2 = await getAmountOfArtInHarvardAPI();
+                console.log(amount2)
 
                 let fetchedItems = [];
-                let maxTries = 10;
+                let maxTries = 15;
                 let tries = 0;
 
-                while (fetchedItems.length < 5 && tries < maxTries) {
+                while (fetchedItems.length < 10 && tries < maxTries) {
                     const randomNumber = Math.floor(Math.random() * amount) + 1;
-                    console.log(randomNumber);
+                    const randomNumber2 = Math.floor(Math.random() * amount2) + 200000;
+                    
 
                     const item = await getItemById(randomNumber);
-                    console.log(item);
+
+                    const item2 = await getHarvardItemById(randomNumber2);
+                    console.log(item2);
 
                     if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0) {
                         fetchedItems.push(item);
-                    } else {
+                      
+                    }
+                    if (item2 && item2.items && item2.images[0].baseimageurl) {
+                        fetchedItems.push(item2)
+                    }
+                    else {
                         maxTries++;
                     }
 

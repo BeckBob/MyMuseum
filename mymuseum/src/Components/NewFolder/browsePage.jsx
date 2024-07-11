@@ -16,13 +16,13 @@ const BrowsePage = () => {
             try {
                 const amount = await getAmountOfArtInMetAPI();
                 const amount2 = await getAmountOfArtInHarvardAPI();
-                console.log(amount2)
+               
 
                 let fetchedItems = [];
                 let maxTries = 15;
                 let tries = 0;
 
-                while (fetchedItems.length < 10 && tries < maxTries) {
+                while (fetchedItems.length < 12 && tries < maxTries) {
                     const randomNumber = Math.floor(Math.random() * amount) + 1;
                     const randomNumber2 = Math.floor(Math.random() * amount2) + 200000;
                     
@@ -30,7 +30,7 @@ const BrowsePage = () => {
                     const item = await getItemById(randomNumber);
 
                     const item2 = await getHarvardItemById(randomNumber2);
-                    console.log(item2);
+                    console.log(randomNumber2)
 
                     if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0) {
                         fetchedItems.push(item);

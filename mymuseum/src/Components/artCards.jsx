@@ -1,56 +1,61 @@
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
 
 const ArtCard = ({ art }) => {
-    {
-        console.log(art)
-        let { title, primaryImageSmall, artistDisplayName, objectDate, images, dateend, people, objectID } = art;
-        if (title.length > 37) {
-            let indexOfFullStop = title.search(".")
-            if (indexOfFullStop >= 0) {
+    // Destructuring with fallback values
+    let {
+        title = "Untitled",
+        primaryImageSmall,
+        artistDisplayName = "Unknown Artist",
+        objectDate,
+        images = [],
+        dateend,
+        people = [],
+        objectID,
+        objectid
+    } = art;
 
-                title = title.slice(0, indexOfFullStop)
-                console.log(title);
-            }
-        }
-        if (title.length === 0) {
-            title = "Untitled"
-        }
-
-        if (primaryImageSmall) {
-            if (artistDisplayName.length === 0) {artistDisplayName = "Unknown Artist" }
-            return (
-               <div className="art-card">
-                    <Link to={`/met/${objectID}`} key={objectID} className="article-link">
-                    <img src={primaryImageSmall} className="art-img" />
-                    <h2 className="art-title">{title}</h2>
-                    <p className="artCardText">By {artistDisplayName} <br />
-                        
-                        <br />
-                        {objectDate}<br />
-                    </p></Link>
-                </div>
-            );
-        }
-        else {
-            console.log("returning HArvard one")
-            return (
-                
-                <div className="art-card">
-                    <Link to={`/harvard/${title}`} key={title} className="article-link">
-                    <img src={images[0].baseimageurl} className="art-img" />
-                    <h2 className="art-title">{title}</h2>
-                    <p className="artCardText">By {people[0].displayname} <br />
-                       
-                        <br />
-                        {dateend}<br />
-                        </p>
-                    </Link>
-                    </div>
-                
-            );
+    // Truncate title if it's too long and contains a full stop
+    if (title.length > 37) {
+        const indexOfFullStop = title.search("\\.");
+        if (indexOfFullStop >= 0) {
+            title = title.slice(0, indexOfFullStop);
         }
     }
 
-}
+    // Determine if the item is from Met or Harvard
+    const isMetArt = Boolean(objectID);
+
+    // Log the art object to debug
+    console.log('Art object:', art);
+    console.log('Is Met Art:', isMetArt);
+
+    // Set link and image based on source
+    const link = isMetArt ? `/met/${objectID}` : `/harvard/${objectid}`;
+    const imageUrl = isMetArt ? primaryImageSmall : (images[0]?.baseimageurl || '');
+    const artistName = isMetArt ? artistDisplayName : (people[0]?.displayname || 'Unknown Artist');
+    const date = isMetArt ? objectDate : dateend;
+    const id = isMetArt ? objectID : objectid;
+
+    // Check if imageUrl is available
+    if (!imageUrl) {
+        console.log('No image available for this art piece:', art);
+    }
+
+    // Render the art card
+    return (
+        <div className="art-card">
+            <Link to={link} key={id} className="article-link">
+                <img src={imageUrl} className="art-img" alt={title} />
+                <h2 className="art-title">{title}</h2>
+                <p className="artCardText">
+                    By {artistName} <br />
+                    <br />
+                    {date}
+                    <br />
+                </p>
+            </Link>
+        </div>
+    );
+};
+
 export default ArtCard;

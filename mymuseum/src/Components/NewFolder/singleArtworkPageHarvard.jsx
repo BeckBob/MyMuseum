@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getItemById } from "../utils";
+import { getHarvardItemById } from "../harvardUtils.jsx";
 import { useParams } from "react-router-dom";
 import RouteError from "../../routeError";
 import { Link } from "react-router-dom";
 
-const SingleMetArtPage = () => {
+const SingleHarvardArtPage = () => {
     const [art, setArt] = useState({});
     const { art_id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
@@ -16,12 +16,12 @@ const SingleMetArtPage = () => {
         const fetchArtwork = async () => {
             setIsLoading(true);
             try {
-                const data = await getItemById(art_id);
+                const data = await getHarvardItemById(art_id);
                 setArt(data);
-                setArtist(data.artistDisplayName || "Anonymous");
+                setArtist(data.people?.[0]?.displayname || "Anonymous");
 
                 const img = new Image();
-                img.src = data.primaryImage;
+                img.src = data.images?.[0]?.baseimageurl || "";
                 img.onload = () => {
                     setPortrait(img.height > img.width);
                     setIsLoading(false);
@@ -42,23 +42,27 @@ const SingleMetArtPage = () => {
     } else {
         return (
             <div className="single-art-card">
-                <section className={!portrait ? "single-art-header-box" : "single-art-header-box header-portrait"}>
-                    <h3 className={!portrait ? "single-art-header" : "single-art-header header-portrait"}>{art.title}</h3>
+                <section className={`single-art-header-box ${portrait ? "header-portrait" : ""}`}>
+                    <h3 className={`single-art-header ${portrait ? "header-portrait" : ""}`}>{art.title}</h3>
                 </section>
-                <div className={!portrait ? "single-art-mainContents" : "single-art-dislayName mainContents-portrait"}>
-                    <img className={!portrait ? "single-art-img" : "single-art-img img-portrait"} src={art.primaryImage} alt={art.title} />
-                    <div className={!portrait ? "single-art-text" : "single-art-text text-portrait"}>
-                        <h4 className={!portrait ? "single-art-displayName" : "single-art-dislayName displayName-portrait"}>By {artist}</h4>
-                        <div className={!portrait ? "single-art-body-whole" : "single-art-body-whole body-portrait"}>
-                            <p className={!portrait ? "single-art-body" : "single-art-body body-text-portrait"}>
+                <div className={`single-art-mainContents ${portrait ? "mainContents-portrait" : ""}`}>
+                    <img className={`single-art-img ${portrait ? "img-portrait" : ""}`} src={art.images?.[0]?.baseimageurl} alt={art.title} />
+                    <div className={`single-art-text ${portrait ? "text-portrait" : ""}`}>
+                        <h4 className={`single-art-displayName ${portrait ? "displayName-portrait" : ""}`}>By {artist}</h4>
+                        <div className={`single-art-body-whole ${portrait ? "body-portrait" : ""}`}>
+                            <p className={`single-art-body ${portrait ? "body-text-portrait" : ""}`}>
                                 {art.medium}<br />
-                                {art.objectDate}<br />
+                                {art.dateend}<br />
                                 currently at {art.repository}
                             </p>
-                            <p className={!portrait ? "single-art-body2" : "single-art-body2 body-text-portrait2"}>
+                            <p className={`single-art-body2 ${portrait ? "body-text-portrait2" : ""}`}>
                                 artist bio: {art.artistDisplayBio}<br />
                                 dimensions: {art.dimensions}<br />
-                                <Link to={{ pathname: art.objectURL }} target="_blank" className="art-link">{art.objectURL}</Link>
+                                {art.images?.[0]?.baseimageurl && (
+                                    <Link to={{ pathname: art.images[0].baseimageurl }} target="_blank" className="art-link">
+                                        {art.images[0].baseimageurl}
+                                    </Link>
+                                )}
                             </p>
                         </div>
                     </div>
@@ -68,4 +72,4 @@ const SingleMetArtPage = () => {
     }
 };
 
-export default SingleMetArtPage;
+export default SingleHarvardArtPage;

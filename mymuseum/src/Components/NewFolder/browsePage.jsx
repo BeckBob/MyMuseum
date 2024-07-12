@@ -30,13 +30,13 @@ const BrowsePage = () => {
                     const item = await getItemById(randomNumber);
 
                     const item2 = await getHarvardItemById(randomNumber2);
-                    console.log(randomNumber2)
+                   
 
                     if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0) {
                         fetchedItems.push(item);
                       
                     }
-                    if (item2 && item2.items && item2.images[0].baseimageurl) {
+                    if (item2 && item2.images && item2.images[0]?.baseimageurl) {
                         fetchedItems.push(item2)
                     }
                     else {

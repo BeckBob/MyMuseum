@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 const ArtCard = ({ art }) => {
     // Destructuring with fallback values
     let {
-        title = "Untitled",
+        title,
         primaryImageSmall,
-        artistDisplayName = "Unknown Artist",
+        artistDisplayName, 
         objectDate,
         images = [],
-        dateend,
+        dated,
         people = [],
         objectID,
         objectid
@@ -33,8 +33,10 @@ const ArtCard = ({ art }) => {
     const link = isMetArt ? `/met/${objectID}` : `/harvard/${objectid}`;
     const imageUrl = isMetArt ? primaryImageSmall : (images[0]?.baseimageurl || '');
     const artistName = isMetArt ? artistDisplayName : (people[0]?.displayname || 'Unknown Artist');
-    const date = isMetArt ? objectDate : dateend;
+    const date = isMetArt ? objectDate : dated;
     const id = isMetArt ? objectID : objectid;
+    const titleOfPiece = title.length > 0 ? title : "Untitled";
+    const artistsNameCatch = artistName.length > 0 ? artistName : "Unknown Artist";
 
     // Check if imageUrl is available
     if (!imageUrl) {
@@ -45,10 +47,10 @@ const ArtCard = ({ art }) => {
     return (
         <div className="art-card">
             <Link to={link} key={id} className="article-link">
-                <img src={imageUrl} className="art-img" alt={title} />
-                <h2 className="art-title">{title}</h2>
+                <img src={imageUrl} className="art-img" alt={titleOfPiece} />
+                <h2 className="art-title">{titleOfPiece}</h2>
                 <p className="artCardText">
-                    By {artistName} <br />
+                    By {artistsNameCatch} <br />
                     <br />
                     {date}
                     <br />

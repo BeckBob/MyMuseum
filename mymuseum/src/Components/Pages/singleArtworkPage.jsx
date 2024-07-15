@@ -3,6 +3,7 @@ import { getItemById } from "../utils";
 import { useParams } from "react-router-dom";
 import RouteError from "../../routeError";
 import { Link } from "react-router-dom";
+import { useExhibition, useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
 
 const SingleMetArtPage = () => {
     const [art, setArt] = useState({});
@@ -11,6 +12,9 @@ const SingleMetArtPage = () => {
     const [artist, setArtist] = useState("Anonymous");
     const [portrait, setPortrait] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+
+    const myExhibition = useExhibition();
+    const addToExhibit = useExhibitionUpdate();
 
     useEffect(() => {
         const fetchArtwork = async () => {
@@ -35,6 +39,10 @@ const SingleMetArtPage = () => {
         fetchArtwork();
     }, [art_id]);
 
+    const handleAddToExhibit = () => {
+        addToExhibit(art);
+    };
+
     if (isLoading) {
         return <section className="loading-screen">Loading...</section>;
     } else if (errorMessage) {
@@ -48,7 +56,7 @@ const SingleMetArtPage = () => {
                 <div className={!portrait ? "single-art-mainContents" : "single-art-dislayName mainContents-portrait"}>
                     <img className={!portrait ? "single-art-img" : "single-art-img img-portrait"} src={art.primaryImage} alt={art.title} />
                     <div className={!portrait ? "single-art-text" : "single-art-text text-portrait"}>
-                        <h4 className={!portrait ? "single-art-displayName" : "single-art-dislayName displayName-portrait"}>By {artist}</h4>
+                        <h4 className={!portrait ? "single-art-displayName" : "single-art-displayName displayName-portrait"}>By {artist}</h4>
                         <div className={!portrait ? "single-art-body-whole" : "single-art-body-whole body-portrait"}>
                             <p className={!portrait ? "single-art-body" : "single-art-body body-text-portrait"}>
                                 {art.medium}<br />
@@ -61,6 +69,7 @@ const SingleMetArtPage = () => {
                                 <Link to={{ pathname: art.objectURL }} target="_blank" className="art-link">{art.objectURL}</Link>
                             </p>
                         </div>
+                        <button onClick={handleAddToExhibit}>Add to Exhibition</button>
                     </div>
                 </div>
             </div>

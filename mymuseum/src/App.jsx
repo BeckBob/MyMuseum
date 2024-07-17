@@ -13,6 +13,8 @@ import SingleHarvardArtPage from "./Components/Pages/singleArtworkPageHarvard";
 
 import { UsersExhibitionProvider } from "./Components/Contexts/UsersExhibitionContext";
 
+import PersonalExhibitionPage from "./Components/Pages/personalExhibition";
+
 function App() {
  
 
@@ -29,7 +31,8 @@ function App() {
               <Route path="/" element={<div className='ArtworkCarousel'><RandomArtworkDisplay /></div>} />
                   <Route path="/browse" element={<div className='browsePage'><BrowsePage /></div>} />
                   <Route path="/met/:art_id" element={<div className='singleArtPage'><SingleMetArtPage /></div>} />
-                  <Route path="/harvard/:art_id" element={<div className='singleArtPage'><SingleHarvardArtPage /></div>} />
+                      <Route path="/harvard/:art_id" element={<div className='singleArtPage'><SingleHarvardArtPage /></div>} />
+                      <Route path="/myExhibition" element={<div className='myExhibition'><PersonalExhibitionPage /></div>} />
               <Route path='/*' element={<RouteError message={"Path doesn't exist!"} />} />
                   </Routes>
               </UsersExhibitionProvider>

@@ -3,7 +3,7 @@ import { getItemById } from "../utils";
 import { useParams } from "react-router-dom";
 import RouteError from "../../routeError";
 import { Link } from "react-router-dom";
-import { useExhibition, useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
+import {useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
 
 const SingleMetArtPage = () => {
     const [art, setArt] = useState({});
@@ -13,7 +13,7 @@ const SingleMetArtPage = () => {
     const [portrait, setPortrait] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const myExhibition = useExhibition();
+    
     const addToExhibit = useExhibitionUpdate();
 
     useEffect(() => {

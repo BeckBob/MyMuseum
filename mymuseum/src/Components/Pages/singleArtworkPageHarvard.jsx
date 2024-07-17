@@ -3,6 +3,7 @@ import { getHarvardItemById } from "../harvardUtils.jsx";
 import { useParams } from "react-router-dom";
 import RouteError from "../../routeError";
 import { Link } from "react-router-dom";
+import { useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
 
 const SingleHarvardArtPage = () => {
     const [art, setArt] = useState({});
@@ -11,6 +12,8 @@ const SingleHarvardArtPage = () => {
     const [artist, setArtist] = useState("Anonymous");
     const [portrait, setPortrait] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+
+    const addToExhibit = useExhibitionUpdate();
 
     useEffect(() => {
         const fetchArtwork = async () => {
@@ -34,6 +37,10 @@ const SingleHarvardArtPage = () => {
 
         fetchArtwork();
     }, [art_id]);
+
+    const handleAddToExhibit = () => {
+        addToExhibit(art);
+    };
 
     if (isLoading) {
         return <section className="loading-screen">Loading...</section>;
@@ -65,6 +72,7 @@ const SingleHarvardArtPage = () => {
                                 )}
                             </p>
                         </div>
+                        <button onClick={handleAddToExhibit}>Add to Exhibition</button>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAmountOfArtInMetAPI, getItemById } from "./utils";
+import { Link } from "react-router-dom";
 
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 
@@ -75,7 +76,9 @@ const RandomArtworkDisplay = () => {
             <div key={items.length} className="carousel">
                 <BsArrowLeftCircleFill className="arrow arrow-left" onClick={ prevSlide} />
                 {items.map((item, index) => (
-                    <img src={item.primaryImageSmall} alt={item.title} key={index} className={slide === index ? "slide" : "slide slide-hidden"} />
+                    <Link to={`/met/${item.objectID}`} key={item.objectID} className="article-link">
+                        <img src={item.primaryImageSmall} alt={item.title} key={index} className={slide === index ? "slide" : "slide slide-hidden"} />
+                    </Link>
                 ))}
                 <BsArrowRightCircleFill className="arrow arrow-right" onClick={nextSlide} />
                 <span className="indicators">

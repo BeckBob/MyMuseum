@@ -3,7 +3,7 @@ import { getItemById } from "../utils";
 import { useParams } from "react-router-dom";
 import RouteError from "../../routeError";
 import { Link } from "react-router-dom";
-import {useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
+import {useExhibition ,useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
 
 const SingleMetArtPage = () => {
     const [art, setArt] = useState({});
@@ -12,9 +12,10 @@ const SingleMetArtPage = () => {
     const [artist, setArtist] = useState("Anonymous");
     const [portrait, setPortrait] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-
+    const [inExhibit, setInExhibit] = useState(false);
     
     const addToExhibit = useExhibitionUpdate();
+    const userExhibit = useExhibition();
 
     useEffect(() => {
         const fetchArtwork = async () => {
@@ -23,7 +24,9 @@ const SingleMetArtPage = () => {
                 const data = await getItemById(art_id);
                 setArt(data);
                 setArtist(data.artistDisplayName || "Anonymous");
-
+                if (userExhibit.some(item => item.objectID === data.objectID)) {
+                    setInExhibit(true);
+                }
                 const img = new Image();
                 img.src = data.primaryImage;
                 img.onload = () => {
@@ -41,6 +44,7 @@ const SingleMetArtPage = () => {
 
     const handleAddToExhibit = () => {
         addToExhibit(art);
+        setInExhibit(!inExhibit);
     };
 
     if (isLoading) {
@@ -69,7 +73,7 @@ const SingleMetArtPage = () => {
                                 <Link to={{ pathname: art.objectURL }} target="_blank" className="art-link">{art.objectURL}</Link>
                             </p>
                         </div>
-                        <button onClick={handleAddToExhibit}>Add to Exhibition</button>
+                        <button onClick={handleAddToExhibit}>{inExhibit ? "Remove from Exhibition" : "Add to Exhibition"}</button>
                     </div>
                 </div>
             </div>

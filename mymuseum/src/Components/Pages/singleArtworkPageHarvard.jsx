@@ -3,7 +3,7 @@ import { getHarvardItemById } from "../harvardUtils.jsx";
 import { useParams } from "react-router-dom";
 import RouteError from "../../routeError";
 import { Link } from "react-router-dom";
-import { useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
+import { useExhibition, useExhibitionUpdate } from "../Contexts/UsersExhibitionContext";
 
 const SingleHarvardArtPage = () => {
     const [art, setArt] = useState({});
@@ -12,8 +12,10 @@ const SingleHarvardArtPage = () => {
     const [artist, setArtist] = useState("Anonymous");
     const [portrait, setPortrait] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [inExhibit, setInExhibit] = useState(false);
 
     const addToExhibit = useExhibitionUpdate();
+    const userExhibit = useExhibition();
 
     useEffect(() => {
         const fetchArtwork = async () => {
@@ -22,6 +24,11 @@ const SingleHarvardArtPage = () => {
                 const data = await getHarvardItemById(art_id);
                 setArt(data);
                 setArtist(data.people?.[0]?.displayname || "Anonymous");
+                console.log(userExhibit)
+                console.log(data)
+                if (userExhibit.some(item => item.id === data.id)) {
+                    setInExhibit(true);
+                }
 
                 const img = new Image();
                 img.src = data.images?.[0]?.baseimageurl || "";
@@ -36,10 +43,11 @@ const SingleHarvardArtPage = () => {
         };
 
         fetchArtwork();
-    }, [art_id]);
+    }, []);
 
     const handleAddToExhibit = () => {
         addToExhibit(art);
+        setInExhibit(prev => !prev);
     };
 
     if (isLoading) {
@@ -72,7 +80,7 @@ const SingleHarvardArtPage = () => {
                                 )}
                             </p>
                         </div>
-                        <button onClick={handleAddToExhibit}>Add to Exhibition</button>
+                        <button onClick={handleAddToExhibit}>{inExhibit ? "Remove from Exhibition" : "Add to Exhibition"}</button>
                     </div>
                 </div>
             </div>

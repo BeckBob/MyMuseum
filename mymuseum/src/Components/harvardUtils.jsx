@@ -18,7 +18,7 @@ export const getAmountOfArtInHarvardAPI = () => {
 
 export const getHarvardItemById = (artId) => {
     return api.get(`/${artId}?apikey=2036d60b-2df2-40d1-9792-3636b9538b08`).then((res) => {
-        console.log(res.data)
+    
         return res.data
     }).catch((err) => {
         console.log(err.response.data)

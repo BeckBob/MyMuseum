@@ -16,7 +16,7 @@ const RandomArtworkDisplay = () => {
             setIsLoading(true);
             try {
                 const amount = await getAmountOfArtInMetAPI();
-                console.log(amount);
+               
 
                 let fetchedItems = [];
                 let maxTries = 5;
@@ -24,10 +24,10 @@ const RandomArtworkDisplay = () => {
 
                 while (fetchedItems.length < 5 && tries < maxTries) {
                     const randomNumber = Math.floor(Math.random() * amount) + 1;
-                    console.log(randomNumber);
+                   
 
                     const item = await getItemById(randomNumber);
-                    console.log(item);
+                 
 
                     if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0) {
                         fetchedItems.push(item);

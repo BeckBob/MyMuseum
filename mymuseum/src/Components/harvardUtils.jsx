@@ -25,3 +25,22 @@ export const getHarvardItemById = (artId) => {
 
     })
 }
+
+export const getHarvardItemByTitle = (searchParams) => {
+    const apiKey = '2036d60b-2df2-40d1-9792-3636b9538b08';  
+    const params = new URLSearchParams({
+        apikey: apiKey,
+        title: searchParams
+    });
+
+    return api.get(`?${params.toString()}`)
+        .then((res) => {
+            console.log(res.data)
+            return res.data
+        })
+        .catch((err) => {
+            console.error('Error fetching data from Harvard API:', err.response?.data || err.message);
+        });
+
+
+}

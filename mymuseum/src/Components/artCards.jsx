@@ -10,6 +10,7 @@ const ArtCard = ({ art }) => {
         images = [],
         dated,
         people = [],
+        primaryimageurl,
         objectID,
         objectid
     } = art;
@@ -21,6 +22,10 @@ const ArtCard = ({ art }) => {
         if (indexOfFullStop >= 0) {
             title = title.slice(0, indexOfFullStop);
         }
+        else {
+            title.slice(0, 15);
+            title= title + "...";
+        }
     }
 
     
@@ -31,7 +36,7 @@ const ArtCard = ({ art }) => {
 
 
     const link = isMetArt ? `/met/${objectID}` : `/harvard/${objectid}`;
-    const imageUrl = isMetArt ? primaryImageSmall : (images[0]?.baseimageurl || '');
+    const imageUrl = isMetArt ? primaryImageSmall : (primaryimageurl);
     const artistName = isMetArt ? artistDisplayName : (people[0]?.displayname || 'Unknown Artist');
     const date = isMetArt ? objectDate : dated;
     const id = isMetArt ? objectID : objectid;

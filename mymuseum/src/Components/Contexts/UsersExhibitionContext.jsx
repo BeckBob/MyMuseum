@@ -16,10 +16,10 @@ export function UsersExhibitionProvider({ children }) {
 
     function addToExhibit(art) {
         setUsersExhibit(prevExhibit => {
-            // Check if the art is already in the exhibit
+           
             const artIndex = prevExhibit.findIndex(item => item.id === art.id);
 
-            // If found, remove it
+            
             if (artIndex !== -1) {
                 return [
                     ...prevExhibit.slice(0, artIndex),
@@ -27,7 +27,7 @@ export function UsersExhibitionProvider({ children }) {
                 ];
             }
 
-            // If not found, add it
+            
             return [...prevExhibit, art];
         });
     }

@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
-import { getAmountOfArtInMetAPI, getItemById } from "../utils";
-import { getAmountOfArtInHarvardAPI, getHarvardItemById, getHarvardItemByTitle } from "../harvardUtils";
+import { getAmountOfArtInMetAPI, getItemById, getMetItemsBySearch } from "../utils";
+import {
+    getAmountOfArtInHarvardAPI,
+    getHarvardItemById,
+    getHarvardItemByTitle,
+    getHarvardItemByMedium,
+    getHarvardItemByCentury,
+    getHarvardItemByDate,
+    getHarvardItemByCulture,
+    getHarvardItemByTechnique
+} from "../harvardUtils";
 import ArtCard from "../artCards";
 
 const BrowsePage = () => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchParam, setSearchParam] = useState("");
+    const [inSearch, setInSearch] = useState(false);
+    const [searchLimits, setSearchLimits] = useState({ start: 0, limit: 10 });
 
     const fetchArtwork = async (append = false) => {
         setIsLoading(true);
@@ -45,24 +56,73 @@ const BrowsePage = () => {
         }
     };
 
-    const searchArtworksetParam = (event) => {
+    const handleSearchParamChange = (event) => {
         setSearchParam(event.target.value);
     };
 
-    const searchArtworks = async () => {
+    const searchArtworks = async (append = false) => {
         setIsLoading(true);
         try {
-            const fetchedItems = await getHarvardItemByTitle(searchParam);
-            const filteredItems = fetchedItems.records.filter((item) =>
-               
-               item.primaryimageurl
+            const [
+                itemsByTitle,
+                itemsByMedium,
+                itemsByCentury,
+                itemsByCulture,
+                itemsByDate,
+                itemsByTechnique,
+                metItems
+            ] = await Promise.all([
+                getHarvardItemByTitle(searchParam),
+                getHarvardItemByMedium(searchParam),
+                getHarvardItemByCentury(searchParam),
+                getHarvardItemByCulture(searchParam),
+                getHarvardItemByDate(searchParam),
+                getHarvardItemByTechnique(searchParam),
+                getMetItemsBySearch(searchParam)
+            ]);
+
+            const metItemsArray = await Promise.all(
+                metItems.objectIDs.slice(searchLimits.start, searchLimits.limit).map(id => getItemById(id))
             );
-            console.log(filteredItems)
-            setItems(filteredItems);
+
+            setSearchLimits(prevLimits => ({
+                start: prevLimits.start + 10,
+                limit: prevLimits.limit + 10
+            }));
+
+            const filteredItems = [
+                ...itemsByTitle.records,
+                ...itemsByMedium.records,
+                ...itemsByCentury.records,
+                ...itemsByCulture.records,
+                ...itemsByDate.records,
+                ...itemsByTechnique.records,
+                ...metItemsArray
+            ].filter((item) =>
+                item.primaryimageurl || item.primaryImageSmall
+            );
+
+            setItems((prevItems) => append ? [...prevItems, ...filteredItems] : filteredItems);
+            setInSearch(true);
         } catch (error) {
             console.error("Error searching artwork:", error);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        setSearchLimits({ start: 0, limit: 10 });
+        searchArtworks();
+    };
+
+    const handleMoreButton = (e) => {
+        e.preventDefault();
+        if (inSearch) {
+            searchArtworks(true);
+        } else {
+            fetchArtwork(true);
         }
     };
 
@@ -75,15 +135,15 @@ const BrowsePage = () => {
     } else {
         return (
             <div>
-                <form>
+                <form method="POST" name="searchform" id="searchform" onSubmit={handleSearchSubmit}>
                     <div className="search-div">
                         <input
-                            onChange={searchArtworksetParam}
+                            onChange={handleSearchParamChange}
                             placeholder="search"
                             id="search-bar"
                             value={searchParam}
                         />
-                        <button onClick={searchArtworks} type="button" id="search-button">Search</button>
+                        <button type="submit" id="search-button">Search</button>
                     </div>
                 </form>
                 <div className="browseCards">
@@ -91,7 +151,7 @@ const BrowsePage = () => {
                         <ArtCard key={index} art={item} />
                     ))}
                 </div>
-                <button onClick={() => fetchArtwork(true)}>Load More</button>
+                <button onClick={handleMoreButton}>Load More</button>
             </div>
         );
     }

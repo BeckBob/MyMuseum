@@ -7,7 +7,6 @@ const ArtCard = ({ art }) => {
         primaryImageSmall,
         artistDisplayName, 
         objectDate,
-        images = [],
         dated,
         people = [],
         primaryimageurl,
@@ -17,15 +16,12 @@ const ArtCard = ({ art }) => {
 
 
 
-    if (title.length > 37) {
-        const indexOfFullStop = title.search("\\.");
-        if (indexOfFullStop >= 0) {
-            title = title.slice(0, indexOfFullStop);
-        }
-        else {
+    if (title.length > 30) {
+        
+       
             title.slice(0, 15);
             title= title + "...";
-        }
+        
     }
 
     
@@ -52,7 +48,7 @@ const ArtCard = ({ art }) => {
     return (
         <div className="art-card">
             <Link to={link} key={id} className="article-link">
-                <img src={imageUrl} className="art-img" alt={titleOfPiece} />
+                <div className="art-img-container"><img src={imageUrl} className="art-img" alt={titleOfPiece} /></div>
                 <h2 className="art-title">{titleOfPiece}</h2>
                 <p className="artCardText">
                     By {artistsNameCatch} <br />

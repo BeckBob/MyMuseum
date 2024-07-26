@@ -20,16 +20,16 @@ const BrowsePage = () => {
     const [searchLimits, setSearchLimits] = useState({ start: 0, limit: 10 });
 
     const fetchArtwork = async (append = false) => {
-        setIsLoading(true);
+        
         try {
             const amount = await getAmountOfArtInMetAPI();
             const amount2 = await getAmountOfArtInHarvardAPI();
 
             let fetchedItems = [];
-            let maxTries = 15;
+            let maxTries = 20;
             let tries = 0;
 
-            while (fetchedItems.length < 12 && tries < maxTries) {
+            while (fetchedItems.length < 8 || tries < maxTries) {
                 const randomNumber = Math.floor(Math.random() * amount) + 1;
                 const randomNumber2 = Math.floor(Math.random() * amount2) + 200000;
 
@@ -127,6 +127,7 @@ const BrowsePage = () => {
     };
 
     useEffect(() => {
+        setIsLoading(true);
         fetchArtwork();
     }, []);
 

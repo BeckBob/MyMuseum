@@ -48,11 +48,14 @@ const PersonalExhibitionPage = () => {
 
     if (!carousel) {
         return (
+            <div>
+             <button onClick={changeView}>Carousel</button>
             <div className="browseCards">
-                <button onClick={changeView}>Carousel</button>
+               
                 {items.map((item, index) => (
                     <ArtCard key={index} art={item} />
                 ))}
+                </div>
             </div>
         );
     }

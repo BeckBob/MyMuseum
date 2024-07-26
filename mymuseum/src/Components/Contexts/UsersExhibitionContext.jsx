@@ -17,14 +17,11 @@ export function UsersExhibitionProvider({ children }) {
     function addToExhibit(art) {
         setUsersExhibit(prevExhibit => {
            
-            const artIndex = prevExhibit.findIndex(item => item.id === art.id);
+            const artIndex = prevExhibit.findIndex(item => item.id === art.id && item.objectID === art.objectID);
 
-            
             if (artIndex !== -1) {
-                return [
-                    ...prevExhibit.slice(0, artIndex),
-                    ...prevExhibit.slice(artIndex + 1)
-                ];
+               
+                return prevExhibit.filter((_, index) => index !== artIndex);
             }
 
             

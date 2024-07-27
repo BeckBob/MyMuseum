@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 
-import "./randomArtworkDisplay.css";
+
 
 const RandomArtworkDisplay = () => {
     const [items, setItems] = useState([]);

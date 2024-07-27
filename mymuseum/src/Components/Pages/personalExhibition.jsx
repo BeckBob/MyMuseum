@@ -44,6 +44,9 @@ const PersonalExhibitionPage = () => {
 
     if (isLoading) {
         return <section className="loading-screen">Results are loading...</section>;
+    } 
+    if (items.length < 1) {
+       return <section className="loading-screen">Exhibition empty</section>;
     }
 
     if (!carousel) {
@@ -62,7 +65,7 @@ const PersonalExhibitionPage = () => {
 
     return (
         <div>
-            <button onClick={changeView}>View All</button>
+            <button className="viewAll-Button" onClick={changeView}>View All</button>
             <div key={items.length} className="carousel">
                 <BsArrowLeftCircleFill className="arrow arrow-left" onClick={prevSlide} />
                 {items.map((item, index) => (item.primaryImageSmall?

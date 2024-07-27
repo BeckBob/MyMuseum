@@ -73,7 +73,7 @@ const SingleMetArtPage = () => {
                                 <Link to={{ pathname: art.objectURL }} target="_blank" className="art-link">{art.objectURL}</Link>
                             </p>
                         </div>
-                        <button onClick={handleAddToExhibit}>{inExhibit ? "Remove from Exhibition" : "Add to Exhibition"}</button>
+                        <button className={!portrait ? "single-addto-button" : "portrait-single-addto-button"} onClick={handleAddToExhibit}>{inExhibit ? "Remove from Exhibition" : "Add to Exhibition"}</button>
                     </div>
                 </div>
             </div>

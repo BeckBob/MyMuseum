@@ -80,7 +80,7 @@ const SingleHarvardArtPage = () => {
                                 )}
                             </p>
                         </div>
-                        <button onClick={handleAddToExhibit}>{inExhibit ? "Remove from Exhibition" : "Add to Exhibition"}</button>
+                        <button className={!portrait ? "single-addto-button" : "portrait-single-addto-button"} onClick={handleAddToExhibit}>{inExhibit ? "Remove from Exhibition" : "Add to Exhibition"}</button>
                     </div>
                 </div>
             </div>

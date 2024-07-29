@@ -27,7 +27,7 @@ export const getItemById = (artId) => {
 
 export const getMetItemsBySearch = (searchParam) => {
     return api.get(`/search?q=${searchParam}`).then((res) => {
-        console.log(res.data)
+      
         return res.data
     }).catch((err) => {
         console.log(err.response.data)

@@ -15,6 +15,7 @@ import ArtCard from "../artCards";
 const BrowsePage = () => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [extraLoading, setExtraLoading] = useState(false);
     const [searchParam, setSearchParam] = useState("");
     const [inSearch, setInSearch] = useState(false);
     const [searchLimits, setSearchLimits] = useState({ start: 0, limit: 10 });
@@ -26,7 +27,7 @@ const BrowsePage = () => {
             const amount2 = await getAmountOfArtInHarvardAPI();
 
             let fetchedItems = [];
-            let maxTries = 20;
+            let maxTries = 10;
             let tries = 0;
 
             while (fetchedItems.length < 8 || tries < maxTries) {
@@ -38,10 +39,10 @@ const BrowsePage = () => {
                     getHarvardItemById(randomNumber2)
                 ]);
 
-                if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0) {
+                if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0 && fetchedItems.length < 8) {
                     fetchedItems.push(item);
                 }
-                if (item2 && item2.images && item2.images.length > 0 && item2.images[0].baseimageurl) {
+                if (item2 && item2.images && item2.images.length > 0 && item2.images[0].baseimageurl && fetchedItems.length < 8) {
                     fetchedItems.push(item2);
                 }
 
@@ -53,6 +54,7 @@ const BrowsePage = () => {
             console.error("Error fetching artwork:", error);
         } finally {
             setIsLoading(false);
+            setExtraLoading(false);
         }
     };
 
@@ -61,7 +63,7 @@ const BrowsePage = () => {
     };
 
     const searchArtworks = async (append = false) => {
-        setIsLoading(true);
+       
         try {
             const [
                 itemsByTitle,
@@ -108,17 +110,21 @@ const BrowsePage = () => {
             console.error("Error searching artwork:", error);
         } finally {
             setIsLoading(false);
+            setExtraLoading(false);
         }
     };
 
     const handleSearchSubmit = (e) => {
+
         e.preventDefault();
+        setIsLoading(true);
         setSearchLimits({ start: 0, limit: 10 });
         searchArtworks();
     };
 
     const handleMoreButton = (e) => {
         e.preventDefault();
+        setExtraLoading(true)
         if (inSearch) {
             searchArtworks(true);
         } else {
@@ -136,8 +142,9 @@ const BrowsePage = () => {
     } else {
         return (
             <div>
+            <div className="search-wrapper">
                 <form method="POST" name="searchform" id="searchform" onSubmit={handleSearchSubmit}>
-                    <div className="search-div">
+                   
                         <input
                             onChange={handleSearchParamChange}
                             placeholder="search"
@@ -145,14 +152,16 @@ const BrowsePage = () => {
                             value={searchParam}
                         />
                         <button type="submit" id="search-button">Search</button>
-                    </div>
-                </form>
+                 
+                    </form>
+                </div>
                 <div className="browseCards">
                     {items.map((item, index) => (
                         <ArtCard key={index} art={item} />
                     ))}
                 </div>
                 <button onClick={handleMoreButton}>Load More</button>
+                <section className="loading-screen">{extraLoading? "Results are loading..." : ""}</section>;
             </div>
         );
     }

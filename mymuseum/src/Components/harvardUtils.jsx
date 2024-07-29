@@ -36,7 +36,7 @@ export const getHarvardItemByTitle = (searchParams) => {
 
     return api.get(`?${params.toString()}`)
         .then((res) => {
-            console.log(res.data)
+         
             return res.data
         })
         .catch((err) => {

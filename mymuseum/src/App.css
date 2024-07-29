@@ -4,7 +4,12 @@
     margin: 0 auto;
     text-align: center;
 }
-
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; 
+}
 body {
     background-color: white;
     margin: 0;
@@ -155,8 +160,8 @@ nav {
     border: 2px solid grey; 
     background-color: white; 
     color: grey; 
-    max-height: 50vw; 
-    max-width: 60vw; 
+    max-height: 60vw; 
+    max-width: 70vw; 
     min-height: 500px; 
     min-width: 300px;
     border-radius: 5px;
@@ -216,50 +221,49 @@ nav {
     margin-top: 0.005rem;
     display: flex;
     flex-direction: row;
- 
     align-items: center;
     justify-content: center;
 }
-
 
 .img-portrait {
     width: 35%;
     height: auto;
     margin-left: 3rem;
-    margin-top: 1rem; 
+    margin-top: 1rem;
     margin-bottom: 2rem;
 }
 
-
 .displayName-portrait {
-    
-
     font-size: 1.2vw;
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     margin: auto;
     margin-bottom: 3vw;
+    padding-right: 4rem; 
 }
-
 
 .header-portrait {
     display: flex;
     justify-content: center;
     font-size: 2vw;
+   
 }
-
 
 .body-portrait {
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    margin: auto;
-
+    align-items: center;
+    margin: 0 auto; 
+    width: 100%; 
+    box-sizing: border-box; 
+    padding-left: 1rem; 
+    padding-right: 4rem; 
 }
-.portrait-single-addto-button{
-   margin-top: 4vw;
+.portrait-single-addto-button {
+    margin-top: 4vw;
+    margin-right: 4rem;
 }
 
 .single-addto-button{
@@ -280,14 +284,24 @@ nav {
 
 @media (max-width: 600px) {
     .mainContents-portrait {
-        flex-direction: column; 
-        align-items: center; 
+        flex-direction: column;
+        align-items: center;
     }
+
+    .carousel {
+        
+        width: 50vw;
+        height: 50vw;
+      
+    }
+
+
 
     .img-portrait {
         width: 80%;
         margin-left: 0;
         margin-top: 2rem;
+        margin-right:0;
     }
 
     .displayName-portrait {
@@ -304,7 +318,7 @@ nav {
     }
 
     .text-portrait {
-        margin-right: 0;
+      
         text-align: center; 
     }
 
@@ -314,75 +328,130 @@ nav {
     }
 }
 
-    .search-div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 1rem;
+.search-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}
+
+
+#searchform {
+    display: flex;
+   
+    justify-content: center;
+
+}
+
+#search-bar {
+    height: 2rem;
+    width: 15vw;
+    min-width: 200px;
+    padding: 0.5rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+#search-button {
+    height: 2rem;
+    width: 7vw;
+    min-width: 100px;
+    font-size: 1rem;
+    text-align: center;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+    #search-button:hover {
+        background-color: #0056b3;
     }
-
-    #search-bar {
-        height: 2rem;
-        width: 15vw;
-        min-width: 200px;
-        padding: 0.5rem;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        font-size: 1rem;
-        box-sizing: border-box;
-    }
-
-    #search-button {
-        height: 2rem;
-        width: 7vw;
-        min-width: 100px;
-        font-size: 1rem;
-        text-align: center;
-        background-color: black;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-left: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-    }
-
-        #search-button:hover {
-            background-color: #0056b3;
-        }
-
     .carousel {
         
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 35rem;
-        height: 35rem;
+        width: 50vw;
+        height: 35vw;
         filter: drop-shadow(0px 0px 5px #555);
         margin: 0 auto;
+        padding-top: 3rem;
     }
+.carousel2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 50vw;
+    height: 35vw;
+    filter: drop-shadow(0px 0px 5px #555);
+    padding-top: 0.5rem;
+}
 
-    .slide {
+.carouselContents {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin: auto;
+    width: 100%; 
+    height: 100%; 
+}
 
-        border-radius: 0.5rem;
-        box-shadow: 0px, 0px, 7px, #666;
-        width: 100%;
-        height: 100%;
-    }
+.slide {
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 7px #666; 
+    width: 100%;
+    height: auto; 
+    max-height: 40vw;
+}
 
-    .slide-hidden {
-        display: none;
-    }
+.slide2 {
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 7px #666;
+    width: 80%;
+    height: auto;
+    max-height: 40vw;
+}
 
+.slide-hidden {
+    display: none;
+}
+
+.slideP, .slideHeader {
+    color: dimgrey;
+    margin-right: 1rem; 
+}
+
+
+.slideP-hidden, .slideHeader-hidden {
+    display: none;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column; 
+    width: 40%;
+    margin-right: 1rem; 
+}
+
+.text-container-hidden{
+    display: none;
+}
     .arrow {
         position: absolute;
-        width: 2rem;
-        height: 2rem;
+        width: 2vw;
+        height: 2vw;
         color: white;
         filter: drop-shadow(0px 0px 5px #808080)
     }
@@ -401,7 +470,9 @@ nav {
 
     .indicators {
         position: absolute;
-        bottom: -3rem;
+        height: 5vw;
+        bottom: -6rem;
+
     }
 
     .indicator {
@@ -411,17 +482,94 @@ nav {
         outline: none;
         box-shadow: 0px 0px 2px #000000;
         margin: 0 0.4rem;
+        padding: 0;
         cursor: pointer;
-        width: 1rem;
+        height: 1vw;
+        width: 1vw;
+
     }
+
+.indicators2 {
+    position: absolute;
+    height: 5vw;
+    bottom: -13rem;
+   margin-right: 2rem;
+}
+
+.indicator2 {
+    background-color: white;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 2px #000000;
+    margin: 0 0.4rem;
+    padding: 0;
+    cursor: pointer;
+    height: 1vw;
+    width: 1vw;
+}
 
     .indicator-inactive {
         background-color: grey;
     }
 
-    .viewAll-Button{
-        display:flex;
-        justify-content:flex-start;
-        margin-left: 6vw;
+.viewAll-Button {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 6vw;
+    height: 2vw;
+    width: 5vw;
+    align-items: center;
+    font-size: 0.8vw
+}
 
+@media (max-width: 768px) {
+    .carousel, .carousel2 {
+        width: 100%;
+        max-width: 90vw;
+        height: 90vw;
+        padding-top: 1rem;
     }
+
+    .arrow {
+        width: 1.5rem;
+        height: 1.5rem;
+        bottom: 13.5rem;
+    }
+    .arrow-left {
+        left: 1rem;
+    }
+
+    .arrow-right {
+        right: 1rem;
+    }
+
+    .indicator, .indicator2 {
+        height: 10px;
+        width: 10px;
+    }
+
+    .viewAll-Button {
+        width:3rem;
+        align-items:center;
+        font-size: 0.4rem;
+        height: auto;
+        padding: 0.3rem 1rem;
+    }
+    .slide {
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 7px #666;
+        width: 100%;
+        height: auto;
+        max-height: 80vw;
+    }
+
+    .slide2 {
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 7px #666;
+        width: 100%;
+        height: auto;
+        max-height: 80vw;
+    }
+
+}

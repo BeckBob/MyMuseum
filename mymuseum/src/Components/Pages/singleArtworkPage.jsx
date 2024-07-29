@@ -23,6 +23,7 @@ const SingleMetArtPage = () => {
             try {
                 const data = await getItemById(art_id);
                 setArt(data);
+          
                 setArtist(data.artistDisplayName || "Anonymous");
                 if (userExhibit.some(item => item.objectID === data.objectID)) {
                     setInExhibit(true);
@@ -65,11 +66,11 @@ const SingleMetArtPage = () => {
                             <p className={!portrait ? "single-art-body" : "single-art-body body-text-portrait"}>
                                 {art.medium}<br />
                                 {art.objectDate}<br />
-                                currently at {art.repository}
+                                Currently At {art.repository}
                             </p>
                             <p className={!portrait ? "single-art-body2" : "single-art-body2 body-text-portrait2"}>
-                                artist bio: {art.artistDisplayBio}<br />
-                                dimensions: {art.dimensions}<br />
+                                Artist From: {art.artistNationality.length > 0 ? art.artistNationality : "Unknown"}<br />
+                                Dimensions: {art.dimensions}<br />
                                 <Link to={{ pathname: art.objectURL }} target="_blank" className="art-link">{art.objectURL}</Link>
                             </p>
                         </div>

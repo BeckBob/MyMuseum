@@ -16,11 +16,9 @@ const ArtCard = ({ art }) => {
 
 
 
-    if (title.length > 30) {
-        
-       
-            title.slice(0, 15);
-            title= title + "...";
+    if (title.length > 25) {
+  
+        title = title.slice(0, 25) + "...";
         
     }
 

@@ -11,6 +11,8 @@ import {
     getHarvardItemByTechnique
 } from "../harvardUtils";
 import ArtCard from "../artCards";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const BrowsePage = () => {
     const [items, setItems] = useState([]);
@@ -21,16 +23,15 @@ const BrowsePage = () => {
     const [searchLimits, setSearchLimits] = useState({ start: 0, limit: 10 });
 
     const fetchArtwork = async (append = false) => {
-        
         try {
             const amount = await getAmountOfArtInMetAPI();
             const amount2 = await getAmountOfArtInHarvardAPI();
 
             let fetchedItems = [];
-            let maxTries = 10;
+            let maxTries = 20;
             let tries = 0;
 
-            while (fetchedItems.length < 8 || tries < maxTries) {
+            while (fetchedItems.length < 8 && tries < maxTries) {
                 const randomNumber = Math.floor(Math.random() * amount) + 1;
                 const randomNumber2 = Math.floor(Math.random() * amount2) + 200000;
 
@@ -41,9 +42,11 @@ const BrowsePage = () => {
 
                 if (item && item.primaryImageSmall && item.primaryImageSmall.length > 0 && fetchedItems.length < 8) {
                     fetchedItems.push(item);
+                    console.log(item, "Item1")
                 }
                 if (item2 && item2.images && item2.images.length > 0 && item2.images[0].baseimageurl && fetchedItems.length < 8) {
                     fetchedItems.push(item2);
+                    console.log(item2, "Item2")
                 }
 
                 tries++;
@@ -63,7 +66,6 @@ const BrowsePage = () => {
     };
 
     const searchArtworks = async (append = false) => {
-       
         try {
             const [
                 itemsByTitle,
@@ -115,7 +117,6 @@ const BrowsePage = () => {
     };
 
     const handleSearchSubmit = (e) => {
-
         e.preventDefault();
         setIsLoading(true);
         setSearchLimits({ start: 0, limit: 10 });
@@ -137,14 +138,27 @@ const BrowsePage = () => {
         fetchArtwork();
     }, []);
 
+    const sortAlphabetically = (e) => {
+        e.preventDefault();
+        const sortedItems = [...items].sort((a, b) => a.title.localeCompare(b.title));
+        setItems(sortedItems);
+    };
+
+    const reverseSortAlphabetically = (e) => {
+        e.preventDefault();
+        const sortedItems = [...items].sort((a, b) => b.title.localeCompare(a.title));
+        setItems(sortedItems);
+    };
+
+    
+
     if (isLoading) {
         return <section className="loading-screen">Results are loading...</section>;
     } else {
         return (
             <div>
-            <div className="search-wrapper">
-                <form method="POST" name="searchform" id="searchform" onSubmit={handleSearchSubmit}>
-                   
+                <div className="search-wrapper">
+                    <form method="POST" name="searchform" id="searchform" onSubmit={handleSearchSubmit}>
                         <input
                             onChange={handleSearchParamChange}
                             placeholder="search"
@@ -152,16 +166,21 @@ const BrowsePage = () => {
                             value={searchParam}
                         />
                         <button type="submit" id="search-button">Search</button>
-                 
                     </form>
+                    <DropdownButton id="dropdown-basic-button" title="Sort By" className="dropdown-button-group">
+                        <Dropdown.Item href="#/action-1" onClick={sortAlphabetically}>A-Z</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2" onClick={reverseSortAlphabetically}>Z-A</Dropdown.Item>
+                     
+                    </DropdownButton>
                 </div>
                 <div className="browseCards">
                     {items.map((item, index) => (
+                       
                         <ArtCard key={index} art={item} />
                     ))}
                 </div>
                 <button onClick={handleMoreButton}>Load More</button>
-                <section className="loading-screen">{extraLoading? "Results are loading..." : ""}</section>;
+                <section className="loading-screen">{extraLoading ? "Results are loading..." : ""}</section>
             </div>
         );
     }

@@ -57,20 +57,20 @@ const SingleHarvardArtPage = () => {
     } else {
         return (
             <div className="single-art-card">
-                <section className={`single-art-header-box ${portrait ? "header-portrait" : ""}`}>
-                    <h3 className={`single-art-header ${portrait ? "header-portrait" : ""}`}>{art.title}</h3>
+                <section className={!portrait ? "single-art-header-box" : "single-art-header-box header-portrait"}>
+                    <h3 className={!portrait ? "single-art-header" : "single-art-header single-art-header-portrait"}>{art.title}</h3>
                 </section>
-                <div className={`single-art-mainContents ${portrait ? "mainContents-portrait" : ""}`}>
-                    <img className={`single-art-img ${portrait ? "img-portrait" : ""}`} src={art.images?.[0]?.baseimageurl} alt={art.title} />
-                    <div className={`single-art-text ${portrait ? "text-portrait" : ""}`}>
-                        <h4 className={`single-art-displayName ${portrait ? "displayName-portrait" : ""}`}>By {artist}</h4>
-                        <div className={`single-art-body-whole ${portrait ? "body-portrait" : ""}`}>
-                            <p className={`single-art-body ${portrait ? "body-text-portrait" : ""}`}>
+                <div className={!portrait ? "single-art-mainContents" : "single-art-mainContents mainContents-portrait"}>
+                    <img className={!portrait ? "single-art-img" : "single-art-img img-portrait"} src={art.images?.[0]?.baseimageurl} alt={art.title} />
+                    <div className={!portrait ? "single-art-text" : "single-art-text text-portrait"}>
+                        <h4 className={!portrait ? "single-art-displayName" : "single-art-displayName displayName-portrait"}>By {artist}</h4>
+                        <div className={!portrait ? "single-art-body-whole" : "single-art-body-whole body-portrait"}>
+                            <p className={!portrait ? "single-art-body" : "single-art-body body-text-portrait"}>
                                 {art.medium}<br />
                                 {art.dated}<br />
                                 Currently at Harvard Art Museums {art.department}
                             </p>
-                            <p className={`single-art-body2 ${portrait ? "body-text-portrait2" : ""}`}>
+                            <p className={!portrait ? "single-art-body2" : "single-art-body2 body-text-portrait2"}>
                                 Artist From: {nationality}<br />
                                 Dimensions: {art.dimensions}<br />
                                 

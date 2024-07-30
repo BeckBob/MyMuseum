@@ -3,6 +3,8 @@ import ArtCard from "../artCards";
 import { useExhibition } from "../Contexts/UsersExhibitionContext";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const PersonalExhibitionPage = () => {
     const exhibitionItems = useExhibition();
@@ -42,6 +44,18 @@ const PersonalExhibitionPage = () => {
         setSlide(index);
     };
 
+    const sortAlphabetically = (e) => {
+        e.preventDefault();
+        const sortedItems = [...items].sort((a, b) => a.title.localeCompare(b.title));
+        setItems(sortedItems);
+    };
+
+    const reverseSortAlphabetically = (e) => {
+        e.preventDefault();
+        const sortedItems = [...items].sort((a, b) => b.title.localeCompare(a.title));
+        setItems(sortedItems);
+    };
+
     if (isLoading) {
         return <section className="loading-screen">Results are loading...</section>;
     } 
@@ -51,8 +65,16 @@ const PersonalExhibitionPage = () => {
 
     if (!carousel) {
         return (
-            <div>
-             <button onClick={changeView}>Carousel</button>
+            <div> <div className="button-container">
+                <button className="carousel-Button" onClick={changeView}>Carousel</button>
+        
+               
+                <DropdownButton id="dropdown-basic-button2" title="Sort By" className="dropdown-button-group">
+                    <Dropdown.Item href="#/action-1" onClick={sortAlphabetically}>A-Z</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2" onClick={reverseSortAlphabetically}>Z-A</Dropdown.Item>
+
+                    </DropdownButton>
+                </div>
             <div className="browseCards">
                
                 {items.map((item, index) => (
@@ -66,8 +88,15 @@ const PersonalExhibitionPage = () => {
 
   
         return (
-            <div>
+            <div> <div className="button-container">
                 <button className="viewAll-Button" onClick={changeView}>View All</button>
+                
+                <DropdownButton id="dropdown-basic-button2" title="Sort By" className="dropdown-button-group">
+                    <Dropdown.Item href="#/action-1" onClick={sortAlphabetically}>A-Z</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2" onClick={reverseSortAlphabetically}>Z-A</Dropdown.Item>
+
+                    </DropdownButton>
+                </div>
                 <div key={items.length} className="carousel2">
                     <BsArrowLeftCircleFill className="arrow arrow-left" onClick={prevSlide} />
                     {items.map((item, index) => (

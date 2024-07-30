@@ -56,9 +56,9 @@ const SingleMetArtPage = () => {
         return (
             <div className="single-art-card">
                 <section className={!portrait ? "single-art-header-box" : "single-art-header-box header-portrait"}>
-                    <h3 className={!portrait ? "single-art-header" : "single-art-header header-portrait"}>{art.title}</h3>
+                    <h3 className={!portrait ? "single-art-header" : "single-art-header single-art-header-portrait"}>{art.title}</h3>
                 </section>
-                <div className={!portrait ? "single-art-mainContents" : "single-art-dislayName mainContents-portrait"}>
+                <div className={!portrait ? "single-art-mainContents" : "single-art-mainContents mainContents-portrait"}>
                     <img className={!portrait ? "single-art-img" : "single-art-img img-portrait"} src={art.primaryImage} alt={art.title} />
                     <div className={!portrait ? "single-art-text" : "single-art-text text-portrait"}>
                         <h4 className={!portrait ? "single-art-displayName" : "single-art-displayName displayName-portrait"}>By {artist}</h4>

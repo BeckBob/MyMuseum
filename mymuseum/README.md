@@ -11,4 +11,4 @@ git remote set-url origin YOUR_NEW_REPO_URL_HERE git branch -M main git push -u 
 
 You'll need to run npm install at this point and then once that is done input npm run dev into your terminal
 
-minimum version of node rquired is v6.9.0
+minimum version of node rquired is v20.15.0

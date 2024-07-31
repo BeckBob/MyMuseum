@@ -197,11 +197,12 @@ nav {
     margin-bottom: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .single-art-body-whole {
         flex-direction: column;
         align-items: flex-start;
     }
+    
 }
 
 .mainContents-portrait {
@@ -323,7 +324,7 @@ nav {
 }
 
 @media (max-width: 700px) {
-    .mainContents-portrait {
+    .mainContents-portrait, .single-art-mainContents {
         flex-direction: column;
         align-items: center;
     }
@@ -334,10 +335,23 @@ nav {
 
     .single-art-card {
         min-height: 650px;
+        max-height: 1000px;
+       
     }
 
     .body-text-portrait, .body-text-portrait2 {
         margin-left: 8vw;
+    }
+
+    .single-art-body, .single-art-body2{
+        margin-left:3vw;
+        font-size: 3vw;
+        width: 90%
+    }
+
+    .art-link{
+        width: 90%;
+        font-size: 2vw;
     }
 
     .img-portrait {
@@ -352,8 +366,8 @@ nav {
         font-size: 2.5vw;
     }
 
-    .displayName-portrait {
-        margin-left: 0.5rem;
+    .displayName-portrait, .single-art-displayName {
+      
         width: 100%;
         font-size: 1.7vw;
         text-align: center;
@@ -379,7 +393,7 @@ nav {
 
 
 @media (max-width: 550px) {
-    .mainContents-portrait {
+    .mainContents-portrait, .single-art-mainContents {
         flex-direction: column;
         align-items: center;
     }
@@ -389,7 +403,7 @@ nav {
         height: 50vw;
     }
 
-    .portrait-single-addto-button {
+    .portrait-single-addto-button{
         margin-left: 16vw;
     }
 
@@ -401,7 +415,15 @@ nav {
         margin-left: 14vw;
     }
 
-    .img-portrait {
+    .single-art-img {
+        width: 70%;
+        margin-left: 0;
+        margin-top: 1rem;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .img-portrait{
         width: 60%;
         margin-left: 0;
         margin-top: 1rem;
@@ -413,7 +435,8 @@ nav {
         font-size: 3vw;
     }
 
-    .displayName-portrait {
+
+    .displayName-portrait, .single-art-displayName {
         margin-left: 0.5rem;
         width: 100%;
         font-size: 3vw;
@@ -431,7 +454,7 @@ nav {
         text-align: center;
     }
 
-    .body-text-portrait, .body-text-portrait2 {
+    .body-text-portrait, .body-text-portrait2{
         font-size: 2vw;
         text-align: center;
         margin-bottom: 0.5rem;
@@ -506,12 +529,15 @@ nav {
     margin-right:1rem;
 }
 
-.carousel-Button,
+.carousel-Button, .viewAll-Button,
 #dropdown-basic-button2 {
+    width: 6rem;
+    height: auto;
+    
     background-color: black;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 1rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 1rem;
@@ -690,15 +716,7 @@ nav {
         background-color: grey;
     }
 
-.viewAll-Button {
-    display: flex;
-    justify-content: flex-start;
-    margin-left: 6vw;
-    height: 2vw;
-    width: 5vw;
-    align-items: center;
-    font-size: 0.8vw
-}
+
 
 
 @media (max-width: 600px) {
@@ -727,14 +745,8 @@ nav {
         width: 10px;
     }
 
-    .viewAll-Button {
-        width:3rem;
-        align-items:center;
-        font-size: 0.4rem;
-        height: auto;
-        padding: 0.3rem 1rem;
-    }
-    .carousel-Button,
+   
+    .carousel-Button, .viewAll-Button,
     #dropdown-basic-button2 {
         width: 5rem;
         height: auto;

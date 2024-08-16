@@ -3,7 +3,7 @@
 
 # My Museum
 
-[![Product Name Screen Shot][product-screenshot]](https://mymuseumapp-kc4wtowo.b4a.run/)
+<img src="Images/ScreenshotHomepage.png">
 
 ## About
 
@@ -11,17 +11,15 @@ MyMuseum is a website that gathers artwork from the Metropolion Museum and The H
 
 Deployed app can be found here - https://mymuseumapp-kc4wtowo.b4a.run/. Hosted using back4app at https://containers.back4app.com/apps.
 
-MyMuseum is a website that gathers artwork from the metropolion museum and Harvard. Users can add artwork they like to their own personal exhibition. Created using Harvards API and The Metropoliton Museums API
+Created using Harvards API and The Metropoliton Museums API. Each API uses different keys for the same types of information, for instance to get the date of the piece The Metropolitan Museum stores it under the key ObjectDate and Harvard used Dated, be mindful of this.  
 documentation on Harvards API is here - https://github.com/harvardartmuseums/api-docs (YOU WILL NEED TO APPLY FOR AN APIKEY TO USE THEIR API, which you can do here -  https://harvardartmuseums.org/collections/api )
 documentation for The Mets API is here - https://metmuseum.github.io/
 link to banckend github repo - https://github.com/BeckBob/MyMuseum
 
 ### Built With
 
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+* React
+* Vue
 
 ### Installation
 
@@ -37,6 +35,7 @@ link to banckend github repo - https://github.com/BeckBob/MyMuseum
 
 minimum version of node rquired is v20.15.0
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
